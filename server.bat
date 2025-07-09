@@ -1,0 +1,1 @@
+php8 -S localhost:8000 -t public
