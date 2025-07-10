@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Noticia;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class NoticiaController extends Controller
 {
@@ -15,7 +16,15 @@ class NoticiaController extends Controller
             'titulo',
             'imagem',
             'data_publicacao',
-            'data_cadastro'
+            'data_cadastro',
+            DB::raw("
+                    CASE
+                        WHEN LENGTH(REGEXP_REPLACE(texto, '<[^>]+>', '')) > 100 THEN
+                            CONCAT(SUBSTRING(REGEXP_REPLACE(texto, '<[^>]+>', ''), 1, 100), '...')
+                        ELSE
+                            REGEXP_REPLACE(texto, '<[^>]+>', '')
+                    END AS resumo
+                ")
         ]);
 
         /* Outras condições */

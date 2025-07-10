@@ -23,7 +23,12 @@ class Noticia extends Model
         'data_cadastro' => 'date:Y-m-d',
     ];
 
-    protected $appends  = ['data_publicacao_br', 'data_cadastro_br', 'imagem_url'];
+    protected $appends  = [
+        'data_publicacao_br',
+        'data_cadastro_br',
+        'dia_mes_publicacao',
+        'imagem_url',
+    ];
 
 
     protected static function booted()
@@ -53,6 +58,11 @@ class Noticia extends Model
     public function getDataCadastroBrAttribute($value)
     {
         return Carbon::parse($this->data_cadastro)->format('d/m/Y');
+    }
+
+    public function getDiaMesPublicacaoAttribute($value)
+    {
+        return Carbon::parse($this->data_publicacao)->translatedFormat('d/M');
     }
 
     public function getImagemUrlAttribute()

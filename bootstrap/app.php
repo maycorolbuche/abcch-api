@@ -7,6 +7,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 ))->bootstrap();
 
 date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
+setlocale(LC_TIME, 'pt_BR.UTF-8');
+\Carbon\Carbon::setLocale('pt_BR');
 
 /*
 |--------------------------------------------------------------------------
@@ -71,9 +73,9 @@ $app->configure('app');
 |
 */
 
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
+$app->middleware([
+    App\Http\Middleware\CorsMiddleware::class
+]);
 
 // $app->routeMiddleware([
 //     'auth' => App\Http\Middleware\Authenticate::class,
