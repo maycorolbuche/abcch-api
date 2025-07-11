@@ -51,4 +51,11 @@ class NoticiaController extends Controller
 
         return response()->json($noticias);
     }
+
+    public function show($id)
+    {
+        $noticia = Noticia::find($id);
+
+        return response()->json($noticia);
+    }
 }
