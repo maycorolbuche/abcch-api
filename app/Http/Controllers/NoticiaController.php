@@ -44,6 +44,7 @@ class NoticiaController extends Controller
 
         $noticias->getCollection()->transform(function ($noticia) {
             $plainText = strip_tags($noticia->texto);
+            $plainText = html_entity_decode($plainText);
             $noticia->resumo = Str::limit($plainText, 100);
             unset($noticia->texto);
             return $noticia;
