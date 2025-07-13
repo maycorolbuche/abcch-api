@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Noticia;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class NoticiaController extends Controller
 {
@@ -17,14 +17,7 @@ class NoticiaController extends Controller
             'imagem',
             'data_publicacao',
             'data_cadastro',
-            DB::raw("
-                    CASE
-                        WHEN LENGTH(REGEXP_REPLACE(texto, '<[^>]+>', '')) > 100 THEN
-                            CONCAT(SUBSTRING(REGEXP_REPLACE(texto, '<[^>]+>', ''), 1, 100), '...')
-                        ELSE
-                            REGEXP_REPLACE(texto, '<[^>]+>', '')
-                    END AS resumo
-                ")
+            'texto',
         ]);
 
         /* Outras condições */
@@ -46,6 +39,15 @@ class NoticiaController extends Controller
         /* Paginação */
         $limit = $request->input('limit', 30);
         $noticias = $query->paginate($limit);
+
+
+
+        $noticias->getCollection()->transform(function ($noticia) {
+            $plainText = strip_tags($noticia->texto);
+            $noticia->resumo = Str::limit($plainText, 100);
+            unset($noticia->texto);
+            return $noticia;
+        });
 
         //dd($query->toSql(), $query->getBindings());
 
