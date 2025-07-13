@@ -5,20 +5,32 @@ namespace App\Http\Controllers;
 use App\Models\Noticia;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class NoticiaController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Noticia::query()->select([
+        $select = [
             'id',
             'titulo',
             'imagem',
             'data_publicacao',
             'data_cadastro',
-            'texto',
-        ]);
+        ];
+
+        $limit = $request->input('limit', 30);
+        $sortField = $request->input('sort_field', 'data_publicacao');
+        $sortOrder = $request->input('sort_order', 'desc');
+
+
+        if ($limit <= 3) {
+            $select[] = DB::raw("
+                CONCAT(SUBSTRING(fn_strip_tags(texto), 1, 100), '...') AS resumo
+            ");
+        }
+
+        $query = Noticia::query()->select($select);
 
         /* Outras condições */
         $query->whereDate('data_publicacao', '<=', Carbon::today());
@@ -30,25 +42,12 @@ class NoticiaController extends Controller
         }
 
         /* Ordenação */
-        $sortField = $request->input('sort_field', 'data_publicacao');
-        $sortOrder = $request->input('sort_order', 'desc');
         $query->orderBy($sortField, $sortOrder);
         $query->orderBy('id', $sortOrder);
 
 
         /* Paginação */
-        $limit = $request->input('limit', 30);
         $noticias = $query->paginate($limit);
-
-
-
-        $noticias->getCollection()->transform(function ($noticia) {
-            $plainText = strip_tags($noticia->texto);
-            $plainText = html_entity_decode($plainText);
-            $noticia->resumo = Str::limit($plainText, 100);
-            unset($noticia->texto);
-            return $noticia;
-        });
 
         //dd($query->toSql(), $query->getBindings());
 
