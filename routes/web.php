@@ -19,4 +19,9 @@ $router->get('/', function () use ($router) {
 
 $router->get('/noticias', 'NoticiaController@index');
 $router->get('/noticias/{id}', 'NoticiaController@show');
+$router->get('/noticia/{id}', 'NoticiaController@show');
+
+$router->get('/paginas/{menu}[/{submenu}]', 'PaginaController@show');
 $router->get('/pagina/{menu}[/{submenu}]', 'PaginaController@show');
+
+$router->get('/anuncios/{tipo}', 'AnuncioController@index');

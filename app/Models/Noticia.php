@@ -42,11 +42,19 @@ class Noticia extends Model
 
     public function getDataPublicacaoAttribute($value)
     {
+        if ($value == 0 || empty($value)) {
+            return null;
+        }
+
         return Carbon::createFromFormat('Ymd', $value)->format('Y-m-d');
     }
 
     public function getDataCadastroAttribute($value)
     {
+        if ($value == 0 || empty($value)) {
+            return null;
+        }
+
         return Carbon::createFromFormat('Ymd', $value)->format('Y-m-d');
     }
 
