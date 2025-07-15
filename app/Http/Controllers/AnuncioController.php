@@ -28,6 +28,7 @@ class AnuncioController extends Controller
                 $q->where('data_validade', 0)
                     ->orWhereDate('data_validade', '>', Carbon::today());
             })
+            ->orderBy('sequencia')
             ->get();
 
 
