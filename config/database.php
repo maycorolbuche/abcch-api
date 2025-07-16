@@ -17,7 +17,7 @@ return [
             'strict'    => true,
             'engine'    => null,
         ],
-        /*
+
         'sqlsrv' => [
             'driver'   => 'sqlsrv',
             'host'     => env('DB_SQLSERVER_HOST', 'localhost'),
@@ -27,8 +27,9 @@ return [
             'password' => env('DB_SQLSERVER_PASSWORD', ''),
             'charset'  => 'utf8',
             'prefix'   => '',
+            'trust_server_certificate' => env('DB_SQLSERVER_TRUST_SERVER_CERTIFICATE', false),
         ],
-
+        /*
         'sqlsrv_news' => [
             'driver'   => 'sqlsrv',
             'host'     => env('DB_SQLSERVER_NEWS_HOST', 'localhost'),
