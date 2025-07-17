@@ -8,14 +8,21 @@ class Estatistica extends Model
 {
     protected $connection = 'sqlsrv';
 
-    protected $table = 'BH01';
-    protected $primaryKey = 'BH01Id';
+    protected $table = 'BH130';
+    protected $primaryKey = 'BH130Id';
 
     protected $fillable = [
-        'BH01Progr',
-        'BH01Descr',
-        'BH01Permissao',
-        'BH01Sistema',
-        'BH01Rotina',
+        'BH130Ano',
+        'BH130Cod_Anim',
+        'BH130Cod_AnimR',
+        'BH130Nomeanimal',
+        'BH130Pontuacao',
+        'BH130Pontuacao2',
+        'BH130QFilhos',
+        'BH130Pontuacao3',
+        'BH130QFilhos2',
+        'BH130QFilhos3',
+        'BH130Tipo',
+        'BH130Ranking',
     ];
 }

@@ -24,6 +24,7 @@ $router->get('/noticia/{id}', 'NoticiaController@show');
 $router->get('/paginas/{menu}[/{submenu}]', 'PaginaController@show');
 $router->get('/pagina/{menu}[/{submenu}]', 'PaginaController@show');
 
+$router->get('/estatisticas/types', 'EstatisticaController@types');
 $router->get('/estatisticas', 'EstatisticaController@index');
 
 $router->get('/anuncios/{tipo}', 'AnuncioController@index');
