@@ -9,9 +9,9 @@ class AnimalController extends Controller
 {
     public function index(Request $request)
     {
-        $type = $request->input('type', 1);
-        $year = $request->input('year', 0);
-        $name = $request->input('name', '');
+        $type = $request->input('tipo', 1);
+        $year = $request->input('ano', 0);
+        $name = $request->input('nome', '');
 
         try {
             $result = AnimalService::get(name: $name, type: $type, year: $year);
