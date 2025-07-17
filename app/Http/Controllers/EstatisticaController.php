@@ -40,7 +40,7 @@ class EstatisticaController extends Controller
             $query->where('a.BH130Nomeanimal', 'like', "%{$fil_nome}%");
         }
         if ($request->has('ano')) {
-            $query->where('a.BH130Ano', $fil_ano);
+            $query->where('a.BH130Ano', str_pad($fil_ano, 4, '0', STR_PAD_LEFT));
         }
         if ($request->has('tipo')) {
             $query->where('a.BH130Tipo', $fil_tipo);
