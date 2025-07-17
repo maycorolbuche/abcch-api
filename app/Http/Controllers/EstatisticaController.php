@@ -72,22 +72,22 @@ class EstatisticaController extends Controller
             return $type['id'] == $id;
         });
 
-        return !empty($result) ? reset($result)['value'] : null;
+        return !empty($result) ? reset($result)['text'] : null;
     }
 
     private function listTypes()
     {
         return [
-            ['id' => 0, 'value' => 'Cavalo Atleta - Pontos Corridos'],
-            ['id' => 1, 'value' => 'Mãe do Cavalo Atleta - Pontos Corridos'],
-            ['id' => 2, 'value' => 'Pai do Cavalo Atleta - Pontos Corridos'],
-            ['id' => 3, 'value' => 'Criador do Cavalo Atleta - Pontos Corridos'],
-            ['id' => 4, 'value' => 'Mãe do Cavalo Atleta - Proporcional dos Filhos maiores de 4 Anos'],
-            ['id' => 5, 'value' => 'Pai do Cavalo Atleta - Proporcional dos Filhos maiores de 4 anos'],
-            ['id' => 6, 'value' => 'Mãe do Cavalo Atleta - Proporcional Filhos Lançados'],
-            ['id' => 7, 'value' => 'Pai do Cavalo Atleta - Proporcional Filhos Lançados'],
-            ['id' => 8, 'value' => 'Criador do Cavalo Atleta - Proporcional dos Filhos maiores de 4 Anos'],
-            ['id' => 9, 'value' => 'Criador do Cavalo Atleta - Proporcional Filhos Lançados']
+            ['id' => 0, 'text' => 'Cavalo Atleta - Pontos Corridos'],
+            ['id' => 1, 'text' => 'Mãe do Cavalo Atleta - Pontos Corridos'],
+            ['id' => 2, 'text' => 'Pai do Cavalo Atleta - Pontos Corridos'],
+            ['id' => 3, 'text' => 'Criador do Cavalo Atleta - Pontos Corridos'],
+            ['id' => 4, 'text' => 'Mãe do Cavalo Atleta - Proporcional dos Filhos maiores de 4 Anos'],
+            ['id' => 5, 'text' => 'Pai do Cavalo Atleta - Proporcional dos Filhos maiores de 4 anos'],
+            ['id' => 6, 'text' => 'Mãe do Cavalo Atleta - Proporcional Filhos Lançados'],
+            ['id' => 7, 'text' => 'Pai do Cavalo Atleta - Proporcional Filhos Lançados'],
+            ['id' => 8, 'text' => 'Criador do Cavalo Atleta - Proporcional dos Filhos maiores de 4 Anos'],
+            ['id' => 9, 'text' => 'Criador do Cavalo Atleta - Proporcional Filhos Lançados']
         ];
     }
 }
