@@ -35,11 +35,11 @@ class AnimalController extends Controller
             ),
         ));
 
-        dd($curl);
+        //dd($curl);
         $response = curl_exec($curl);
 
 
-        curl_close($curl);
+        //curl_close($curl);
         $data = json_decode($response, true);
 
         return $data;
