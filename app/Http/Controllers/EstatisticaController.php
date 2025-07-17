@@ -13,9 +13,9 @@ class EstatisticaController extends Controller
     {
         $limit = $request->input('limit', 30);
 
-        $fil_nome = $request->input('nome') ?? '';
-        $fil_ano = $request->input('ano') ?? '';
-        $fil_tipo = $request->input('tipo') ?? '';
+        $fil_nome = $request->input('nome', '');
+        $fil_ano = $request->input('ano', '');
+        $fil_tipo = $request->input('tipo', '');
 
         $query = Estatistica::query()->select([
             'a.BH130Nomeanimal as animal_nome',
