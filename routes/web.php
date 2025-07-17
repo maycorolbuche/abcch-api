@@ -28,3 +28,5 @@ $router->get('/estatisticas/types', 'EstatisticaController@types');
 $router->get('/estatisticas', 'EstatisticaController@index');
 
 $router->get('/anuncios/{tipo}', 'AnuncioController@index');
+
+$router->get('/animais', 'AnimalController@index');
