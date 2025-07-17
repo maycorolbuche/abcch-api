@@ -30,10 +30,12 @@ class AnimalService
                 'Content-Type: application/json',
                 'Authorization: Basic ' . env('API_CAVALOBH_TOKEN', ''),
             ],
-            CURLOPT_SSL_VERIFYPEER => !App::environment('local'),
-            CURLOPT_SSL_VERIFYHOST => !App::environment('local'),
         ];
 
+        if (App::environment('local')) {
+            $curlOptions[CURLOPT_SSL_VERIFYPEER] = false;
+            $curlOptions[CURLOPT_SSL_VERIFYHOST] = false;
+        }
 
         $curl = curl_init();
         curl_setopt_array($curl, $curlOptions);

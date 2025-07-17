@@ -11,10 +11,13 @@ class AnimalController extends Controller
     {
         $type = $request->input('type', 1);
         $year = $request->input('year', 0);
-        $name = $request->input('name', 'CORDO');
+        $name = $request->input('name', '');
 
         try {
             $result = AnimalService::get(name: $name, type: $type, year: $year);
+            if ($result["message"]) {
+                $result["error"] = $result["message"];
+            }
             return response()->json($result);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
