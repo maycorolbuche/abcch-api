@@ -14,18 +14,65 @@ class AnimalController extends Controller
         $name = $request->input('nome', '');
 
         try {
-            $result = AnimalService::get(name: $name, type: $type, year: $year);
+            $result = AnimalService::list(name: $name, type: $type, year: $year);
             if (isset($result["message"]) && $result["message"] <> "") {
                 $result["error"] = $result["message"];
             } elseif (isset($result["result"])) {
                 $result["data"] = $result["result"];
                 unset($result["result"]);
                 foreach ($result["data"] as $key => $item) {
-                    $result["data"][$key]['DtFoaledBr'] = date("d/m/Y", strtotime($item["DtFoaled"]));
+                    $result["data"][$key]['DtFoaledBr'] = ($item["DtFoaled"] <> null ? date("d/m/Y", strtotime($item["DtFoaled"])) : null);
                     $result["data"][$key]['NmGender'] = ($item["CdGender"] == "M" ? "MACHO" : "FÊMEA");
                 }
             }
             return response()->json($result);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function show($id)
+    {
+        try {
+            $result = AnimalService::get($id);
+            if (isset($result["message"]) && $result["message"] <> "") {
+                $result["error"] = $result["message"];
+            } elseif (isset($result["result"])) {
+                $result["data"] = $result["result"];
+                unset($result["result"]);
+
+                $result["data"]['DtFoaledBr'] = ($result["data"]["DtFoaled"] <> null ? date("d/m/Y", strtotime($result["data"]["DtFoaled"])) : null);
+                $result["data"]['DtDeathBr'] = ($result["data"]["DtDeath"] <> null ? date("d/m/Y", strtotime($result["data"]["DtDeath"])) : null);
+
+                foreach ($result["data"]['lstProgeny'] as $key => $item) {
+                    $result["data"]['lstProgeny'][$key]['DtFoaledBr'] = ($item["DtFoaled"] <> null ? date("d/m/Y", strtotime($item["DtFoaled"])) : null);
+                }
+
+                foreach ($result["data"]['lstBrothers'] as $key => $item) {
+                    $result["data"]['lstBrothers'][$key]['DtFoaledBr'] = ($item["DtFoaled"] <> null ? date("d/m/Y", strtotime($item["DtFoaled"])) : null);
+                }
+            }
+
+
+            try {
+                $resultPedigree = AnimalService::getPedigree($id);
+                if (isset($resultPedigree["message"]) && $resultPedigree["message"] <> "") {
+                    $resultPedigree["error"] = $resultPedigree["message"];
+                } elseif (isset($resultPedigree["result"])) {
+                    $resultPedigree["resultCode"] = [];
+                    foreach ($resultPedigree["result"] as $key => $item) {
+                        $resultPedigree["resultCode"][$item['vlCode']] = $item;
+                    }
+                    $resultPedigree["data"] = $this->buildPedigree($resultPedigree["resultCode"]);
+                    unset($resultPedigree["result"]);
+                    unset($resultPedigree["resultCode"]);
+                }
+
+                $result['data']['lstPedigree'] = $resultPedigree['data'];
+            } catch (\Exception $e) {
+            }
+
+            return response()->json($result['data']);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -47,5 +94,29 @@ class AnimalController extends Controller
             ['id' => 6, 'text' => 'Avô Paterno'],
             ['id' => 7, 'text' => 'Avô Materno'],
         ];
+    }
+
+    private function buildPedigree(array $flat): array
+    {
+        $make = function ($id) use (&$make, $flat) {
+            if (!isset($flat[$id])) return null;
+
+            $node = $flat[$id];
+
+            $fatherId = $id . '1';
+            $motherId = $id . '2';
+
+            if (isset($flat[$fatherId])) {
+                $node['sire'] = $make($fatherId);
+            }
+
+            if (isset($flat[$motherId])) {
+                $node['dam'] = $make($motherId);
+            }
+
+            return $node;
+        };
+
+        return $make('1');
     }
 }
