@@ -33,3 +33,5 @@ $router->get('/animais', 'AnimalController@index');
 $router->get('/animais/types', 'AnimalController@types');
 $router->get('/animais/{id}', 'AnimalController@show');
 $router->get('/animal/{id}', 'AnimalController@show');
+$router->get('/animais/{id}/print', 'AnimalController@print');
+$router->get('/animal/{id}/print', 'AnimalController@print');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\AnimalService;
+use App\Helpers\PdfParts;
 
 class AnimalController extends Controller
 {
@@ -77,6 +78,50 @@ class AnimalController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+    public function print($id)
+    {
+        $data = self::show($id);
+        $data = $data->getData(true);
+
+        $html = "";
+
+        $html .= PdfParts::init(
+            title: $data["NmAnimal"]
+        );
+
+        $html .= PdfParts::space();
+
+        $html .= PdfParts::fields(columns: 2, data: [
+            ['label' => 'Nome', 'value' => $data['NmAnimal'] ?? ''],
+            ['label' => 'Registro', 'value' => $data['NrRegistration'] ?? ''],
+            ['label' => 'Microchip', 'value' => $data['CdMicrochip'] ?? ''],
+            ['label' => 'Nascimento', 'value' => $data['DtFoaledBr'] ?? ''],
+            ['label' => 'Sexo', 'value' => $data['DsGender'] ?? ''],
+            ['label' => 'Criador', 'value' => $data['NmUserBreeder'] ?? ''],
+            ['label' => 'Proprietário', 'value' => $data['NmUserOwner'] ?? ''],
+            ['label' => 'Status', 'value' => $data['DsStatus'] ?? ''],
+            ['label' => 'Raça', 'value' => $data['DsBreed'] ?? ''],
+            ['label' => 'Pelagem', 'value' => $data['DsCoatColor'] ?? ''],
+            ['label' => 'DNA', 'value' => $data['CdDNALaboratory'] ?? ''],
+            ['label' => 'Status do DNA', 'value' => $data['DsDNAResult'] ?? ''],
+            ['label' => 'Local de Nascimento', 'value' => $data['DsFoalBirthplace'] ?? ''],
+        ]);
+
+        $html .= PdfParts::space(50);
+
+        $html .= PdfParts::title("GENEALOGIA");
+        $html .= PdfParts::space();
+
+        $html .= PdfParts::familyTree(
+            sire: $data["lstPedigree"]["sire"],
+            dam: $data["lstPedigree"]["dam"]
+        );
+
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+        return $pdf->stream('Genealogia - ' . $data["NmAnimal"] . '.pdf');
     }
 
     public function types()
