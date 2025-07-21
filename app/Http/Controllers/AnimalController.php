@@ -43,6 +43,7 @@ class AnimalController extends Controller
 
                 $result["data"]['DtFoaledBr'] = ($result["data"]["DtFoaled"] <> null ? date("d/m/Y", strtotime($result["data"]["DtFoaled"])) : null);
                 $result["data"]['DtDeathBr'] = ($result["data"]["DtDeath"] <> null ? date("d/m/Y", strtotime($result["data"]["DtDeath"])) : null);
+                $result["data"]['DsStatus'] = ($result["data"]["DtDeath"] == null ? "Vivo" : "Morto em " . date("d/m/Y", strtotime($result["data"]["DtDeath"])));
 
                 foreach ($result["data"]['lstProgeny'] as $key => $item) {
                     $result["data"]['lstProgeny'][$key]['DtFoaledBr'] = ($item["DtFoaled"] <> null ? date("d/m/Y", strtotime($item["DtFoaled"])) : null);
