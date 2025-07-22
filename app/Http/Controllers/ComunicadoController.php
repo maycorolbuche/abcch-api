@@ -26,7 +26,8 @@ class ComunicadoController extends Controller
         ])
             ->where('tipo', Str::upper($tipo))
             ->where('ind_ativo', 'S')
-            ->orderBy('sequencia');
+            ->orderBy('sequencia')
+            ->orderBy('descricao');
 
         if ($request->has('ano')) {
             $ano = $request->input('ano');
