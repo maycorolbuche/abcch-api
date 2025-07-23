@@ -37,3 +37,5 @@ $router->get('/animais/{id}/print', 'AnimalController@print');
 $router->get('/animal/{id}/print', 'AnimalController@print');
 
 $router->get('/comunicado/{tipo}', 'ComunicadoController@index');
+
+$router->get('/pessoas/{tipo}', 'PessoaController@index');
