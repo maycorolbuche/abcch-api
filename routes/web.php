@@ -35,6 +35,8 @@ $router->get('/animais/{id}', 'AnimalController@show');
 $router->get('/animal/{id}', 'AnimalController@show');
 $router->get('/animais/{id}/print', 'AnimalController@print');
 $router->get('/animal/{id}/print', 'AnimalController@print');
+$router->get('/animais/{sire}/{dam}/print', 'AnimalController@crossingPrint');
+$router->get('/animal/{sire}/{dam}/print', 'AnimalController@crossingPrint');
 
 $router->get('/comunicado/{tipo}', 'ComunicadoController@index');
 

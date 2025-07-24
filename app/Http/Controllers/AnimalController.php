@@ -124,6 +124,50 @@ class AnimalController extends Controller
         return $pdf->stream('Genealogia - ' . $data["NmAnimal"] . '.pdf');
     }
 
+    public function crossingPrint($sire, $dam)
+    {
+        $data = self::show($sire);
+        $sire_data = $data->getData(true);
+
+        $data = self::show($dam);
+        $dam_data = $data->getData(true);
+
+        //dd($sire_data, $dam_data);
+
+        $html = "";
+
+        $html .= PdfParts::init(
+            title: "GENEALOGIA DO FUTURO POTRO"
+        );
+
+        $html .= PdfParts::space(40);
+
+        $html .= "<table style='width: 100%; border-collapse: collapse;'>";
+        $html .= "<tr><td>";
+        $html .= "<div style='background:#9dbfe2;padding:25px 10px 25px 10px;text-align:center;border-radius:10px;'>" . $sire_data["NmAnimal"] . "</div>";
+        $html .= "</td><td style='text-align: center;font-size: 40px;color: #afafaf;'>";
+        $html .= "<b>X</b>";
+        $html .= "</td><td>";
+        $html .= "<div style='background:#f2ddee;padding:25px 10px 25px 10px;text-align:center;border-radius:10px;'>" . $dam_data["NmAnimal"] . "</div>";
+        $html .= "</td></tr>";
+        $html .= "</table>";
+
+
+        $html .= PdfParts::space(50);
+
+        $html .= PdfParts::title("GENEALOGIA");
+        $html .= PdfParts::space();
+
+        $html .= PdfParts::familyTree(
+            sire: $sire_data["lstPedigree"],
+            dam: $dam_data["lstPedigree"]
+        );
+
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+        return $pdf->stream('Cruzamento Virtual - ' . $sire_data["NmAnimal"] . ' X ' . $dam_data["NmAnimal"] . '.pdf');
+    }
+
     public function types()
     {
         return self::listTypes();
