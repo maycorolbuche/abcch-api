@@ -40,6 +40,8 @@ $router->get('/animal/{sire}/{dam}/print', 'AnimalController@crossingPrint');
 
 $router->get('/comunicado/{tipo}', 'ComunicadoController@index');
 
-$router->get('/pessoas/{tipo}', 'PessoaController@index');
+//$router->get('/pessoas/{tipo}', 'PessoaController@index');
+$router->get('/inspetores', 'InspetorController@index');
+$router->get('/criadores', 'CriadorController@index');
 
 $router->get('/matriz/{type}', 'MatrizController@index');

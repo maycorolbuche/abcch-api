@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Comunicado;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 class ComunicadoController extends Controller
