@@ -61,6 +61,8 @@ $app->singleton(
 */
 
 $app->configure('app');
+$app->configure('mail');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -96,6 +98,9 @@ $app->middleware([
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Barryvdh\DomPDF\ServiceProvider::class);
+$app->register(Illuminate\Mail\MailServiceProvider::class);
+
+class_alias(Illuminate\Support\Facades\Mail::class, 'Mail');
 
 
 /*
