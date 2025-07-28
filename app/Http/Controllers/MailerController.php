@@ -23,6 +23,25 @@ class MailerController extends Controller
         $direcionamento = $request->input('direcionamento');
         $objetivo = $request->input('objetivo');
 
+        if (!$nome) {
+            return response()->json(['error' => "Digite seu nome!"], 500);
+        }
+        if (!$email) {
+            return response()->json(['error' => "Digite seu e-mail!"], 500);
+        }
+        if (!$assunto) {
+            return response()->json(['error' => "Digite o assunto!"], 500);
+        }
+        if (!$objetivo) {
+            return response()->json(['error' => "Escolha o objetivo da mensagem!"], 500);
+        }
+        if (!$direcionamento) {
+            return response()->json(['error' => "Escolha o direcionamento do assunto!"], 500);
+        }
+        if (!$mensagem) {
+            return response()->json(['error' => "Digite a mensagem!"], 500);
+        }
+
         $contato_email = ContatoEmail::find($destinatario);
         if (!$contato_email) {
             return response()->json(['error' => "Destinatário não localizado!"], 500);
@@ -104,5 +123,18 @@ class MailerController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+    public function data()
+    {
+        $contato_direcionamento = ContatoDirecionamento::get();
+        $contato_objetivo = ContatoObjetivo::get();
+        $contato_email = ContatoEmail::get();
+
+        return response()->json([
+            'contato_direcionamento' => $contato_direcionamento,
+            'contato_objetivo' => $contato_objetivo,
+            'contato_email' => $contato_email,
+        ]);
     }
 }

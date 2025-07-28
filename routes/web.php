@@ -19,6 +19,7 @@ $router->get('/', function () use ($router) {
 
 //$router->get('/email', 'MailerController@index');
 $router->post('/email', 'MailerController@index');
+$router->get('/email/dados', 'MailerController@data');
 
 $router->get('/noticias', 'NoticiaController@index');
 $router->get('/noticias/{id}', 'NoticiaController@show');
