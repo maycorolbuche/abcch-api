@@ -18,20 +18,6 @@ return [
             'engine'    => null,
         ],
 
-        'mysql_adm' => [
-            'driver'    => 'mysql',
-            'host'      => env('DB_ADM_HOST', '127.0.0.1'),
-            'port'      => env('DB_ADM_PORT', '3306'),
-            'database'  => env('DB_ADM_DATABASE', 'forge'),
-            'username'  => env('DB_ADM_USERNAME', 'forge'),
-            'password'  => env('DB_ADM_PASSWORD', ''),
-            'charset'   => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
-            'prefix'    => '',
-            'strict'    => true,
-            'engine'    => null,
-        ],
-
         'sqlsrv' => [
             'driver'   => 'sqlsrv',
             'host'     => env('DB_SQLSERVER_HOST', 'localhost'),
