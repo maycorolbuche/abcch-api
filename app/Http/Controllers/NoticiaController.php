@@ -64,7 +64,7 @@ class NoticiaController extends Controller
 
     public function show($id)
     {
-        $noticia = Cache::remember('noticias:' . $id, 3600, function () use ($id) {
+        $noticia = Cache::remember('noticia:' . $id, 3600, function () use ($id) {
             return Noticia::find($id);
         });
 
