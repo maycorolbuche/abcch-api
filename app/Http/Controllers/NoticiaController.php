@@ -41,13 +41,13 @@ class NoticiaController extends Controller
 
             if ($limit <= 3) {
                 $select[] = DB::raw("
-                CONCAT(SUBSTRING(fn_strip_tags(texto), 1, 100), '...') AS resumo
-            ");
+                    CONCAT(SUBSTRING(fn_strip_tags(texto), 1, 100), '...') AS resumo
+                ");
             }
 
             $query = Noticia::query()->select($select);
 
-            $query->whereDate('data_publicacao', '<=', \Carbon\Carbon::today());
+            $query->whereDate('data_publicacao', '<=', Carbon::today());
 
             if (!empty($search)) {
                 $query->where('titulo', 'like', "%{$search}%");

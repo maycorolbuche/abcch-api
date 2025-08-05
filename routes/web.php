@@ -48,4 +48,6 @@ $router->get('/comunicado/{tipo}', 'ComunicadoController@index');
 $router->get('/inspetores', 'InspetorController@index');
 $router->get('/criadores', 'CriadorController@index');
 
+$router->get('/pesquisa/{search}', 'PesquisaController@index');
+
 $router->get('/matriz/{type}', 'MatrizController@index');
