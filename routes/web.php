@@ -33,6 +33,8 @@ $router->get('/estatisticas', 'EstatisticaController@index');
 
 $router->get('/anuncios/{tipo}', 'AnuncioController@index');
 
+$router->get('/biblioteca', 'BibliotecaController@index');
+
 $router->get('/animais', 'AnimalController@index');
 $router->get('/animais/types', 'AnimalController@types');
 $router->get('/animais/{id}', 'AnimalController@show');
