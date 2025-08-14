@@ -28,6 +28,7 @@ class Noticia extends Model
         'data_cadastro_br',
         'dia_mes_publicacao',
         'imagem_url',
+        'conteudo',
     ];
 
 
@@ -84,5 +85,12 @@ class Noticia extends Model
         }
 
         return env('MEDIA_URL') . '/arq/noticia/' . $this->id . '/' . $this->imagem;
+    }
+
+    public function getConteudoAttribute()
+    {
+        $texto = $this->texto;
+        $texto = str_replace('src="/', 'src="' . env('MEDIA_URL') . '/arq/noticia/' . $this->id . '/', $texto);
+        return $texto;
     }
 }
