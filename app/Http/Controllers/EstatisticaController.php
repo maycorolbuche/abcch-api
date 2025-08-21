@@ -11,7 +11,7 @@ class EstatisticaController extends Controller
 {
     public function index(Request $request)
     {
-        $limit = $request->input('limit', 30);
+        /* $limit = $request->input('limit', 30);
 
         $fil_nome = $request->input('nome', '');
         $fil_ano = $request->input('ano', '');
@@ -56,7 +56,7 @@ class EstatisticaController extends Controller
             return $item;
         });
 
-        return response()->json($estatisticas);
+        return response()->json($estatisticas);*/
     }
 
 

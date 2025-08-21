@@ -7,7 +7,7 @@ use App\Models\Pagina;
 use App\Models\Comunicado;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use App\Services\AnimalService;
+use App\Services\CavaloBhService;
 
 
 class PesquisaController extends Controller
@@ -24,7 +24,7 @@ class PesquisaController extends Controller
             ->limit($limit)
             ->get();
 
-        $animais = AnimalService::list(name: $search, type: 1, year: 0);
+        $animais = CavaloBhService::list(name: $search, type: 1, year: 0);
         $animais = $animais['result'] ?? null;
 
         $paginas = Pagina::select(['id', 'menu', 'submenu', 'site_titulo', 'site_url', 'site_param'])

@@ -2,50 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Inspetor;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Services\AbcchService;
 
 class InspetorController extends Controller
 {
     public function index(Request $request)
     {
-        $limit = $request->input('limit', 30);
+        $name = $request->input('name', $request->input('search', ''));
+        $uf = $request->input('uf', '');
+        $city = $request->input('city', '');
 
-        $query = Inspetor::query()
-            ->select([
-                'BH09Id as id',
-                'BH09Nomeinspec as nome',
-                'BH09Email as email',
-                'BH09Celular as celular',
-                'BH09Telef1 as telefone',
-                'BH09Telef2 as telefone2',
-                'BH09Cid as end_cidade',
-                'BH09Est as end_uf',
-            ]);
+        try {
+            $result["data"] = AbcchService::inspetor(['in_name' => $name, 'in_uf' => $uf, 'in_city' => $city]);
 
-        $query->where(DB::raw('ISNULL(BH09EstoqueICSI, \'\')'), '<>', 'S');
-
-        /* Busca */
-        if ($request->has('search')) {
-            $search = $request->input('search');
-            $query->where('BH09Nomeinspec', 'like', "%{$search}%");
+            return response()->json($result);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-        if ($request->has('uf')) {
-            $search = $request->input('uf');
-            $query->where('BH09Est', Str::upper($search));
-        }
-
-        /* Ordenação */
-        $query->orderBy("BH09Nomeinspec", "asc");
-
-
-        /* Paginação */
-        $pessoas = $query->paginate($limit);
-
-        //dd($query->toSql(), $query->getBindings());
-
-        return response()->json($pessoas);
     }
 }

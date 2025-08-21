@@ -2,45 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Criador;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Services\AbcchService;
 
 class CriadorController extends Controller
 {
     public function index(Request $request)
     {
-        $limit = $request->input('limit', 30);
+        $name = $request->input('name', $request->input('search', ''));
+        $uf = $request->input('uf', '');
+        $city = $request->input('city', '');
 
-        $query = Criador::query()
-            ->select([
-                'harasid as id',
-                'harasnome as nome',
-                'harascidade as end_cidade',
-                'harasuf as end_uf',
-                'harassite as site',
-            ]);
+        try {
+            $result["data"] = AbcchService::criador(['in_name' => $name, 'in_uf' => $uf, 'in_city' => $city]);
 
-
-        /* Busca */
-        if ($request->has('search')) {
-            $search = $request->input('search');
-            $query->where('harasnome', 'like', "%{$search}%");
+            return response()->json($result);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-        if ($request->has('uf')) {
-            $search = $request->input('uf');
-            $query->where('harasuf', Str::upper($search));
-        }
-
-        /* Ordenação */
-        $query->orderBy("harasnome", "asc");
-
-
-        /* Paginação */
-        $pessoas = $query->paginate($limit);
-
-        //dd($query->toSql(), $query->getBindings());
-
-        return response()->json($pessoas);
     }
 }

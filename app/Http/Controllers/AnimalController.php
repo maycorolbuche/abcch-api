@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Services\AnimalService;
+use App\Services\CavaloBhService;
 use App\Helpers\PdfParts;
 
 class AnimalController extends Controller
@@ -15,7 +15,7 @@ class AnimalController extends Controller
         $name = $request->input('nome', '');
 
         try {
-            $result = AnimalService::list(name: $name, type: $type, year: $year);
+            $result = CavaloBhService::list(name: $name, type: $type, year: $year);
             if (isset($result["message"]) && $result["message"] <> "") {
                 $result["error"] = $result["message"];
             } elseif (isset($result["result"])) {
@@ -35,7 +35,7 @@ class AnimalController extends Controller
     public function show($id)
     {
         try {
-            $result = AnimalService::get($id);
+            $result = CavaloBhService::get($id);
             if (isset($result["message"]) && $result["message"] <> "") {
                 $result["error"] = $result["message"];
             } elseif (isset($result["result"])) {
@@ -57,7 +57,7 @@ class AnimalController extends Controller
 
 
             try {
-                $resultPedigree = AnimalService::getPedigree($id);
+                $resultPedigree = CavaloBhService::getPedigree($id);
                 if (isset($resultPedigree["message"]) && $resultPedigree["message"] <> "") {
                     $resultPedigree["error"] = $resultPedigree["message"];
                 } elseif (isset($resultPedigree["result"])) {

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Services\AnimalService;
+use App\Services\CavaloBhService;
 use App\Helpers\PdfParts;
 
 class MatrizController extends Controller
@@ -11,7 +11,7 @@ class MatrizController extends Controller
     public function index(Request $request, $type)
     {
         try {
-            $result = AnimalService::goldMares($type);
+            $result = CavaloBhService::goldMares($type);
 
             if (isset($result["message"]) && $result["message"] <> "") {
                 $result["error"] = $result["message"];

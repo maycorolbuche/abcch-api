@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\App;
 
-class AnimalService
+class CavaloBhService
 {
     private const BASE_URL = 'https://cavalobh.com.br/api/interfacentsoft';
 
