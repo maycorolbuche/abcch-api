@@ -18,6 +18,10 @@ class Pagina extends Model
         'sequencia',
     ];
 
+    protected $appends  = [
+        'conteudo',
+    ];
+
     public function getConteudoAttribute()
     {
         $texto = $this->texto;
