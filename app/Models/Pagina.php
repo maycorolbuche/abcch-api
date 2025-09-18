@@ -17,4 +17,11 @@ class Pagina extends Model
         'site_html',
         'sequencia',
     ];
+
+    public function getConteudoAttribute()
+    {
+        $texto = $this->texto;
+        $texto = str_replace('src="/', 'src="' . env('MEDIA_URL') . '/arq/pagina/' . $this->id . '/', $texto);
+        return $texto;
+    }
 }
