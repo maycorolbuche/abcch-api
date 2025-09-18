@@ -24,7 +24,7 @@ class Pagina extends Model
 
     public function getConteudoAttribute()
     {
-        $texto = $this->texto;
+        $texto = $this->site_html;
         $texto = str_replace('src="/', 'src="' . env('MEDIA_URL') . '/arq/pagina/' . $this->id . '/', $texto);
         return $texto;
     }
