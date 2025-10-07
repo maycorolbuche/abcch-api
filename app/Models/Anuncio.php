@@ -15,6 +15,7 @@ class Anuncio extends Model
         'imagem',
         'site_url',
         'site_janela',
+        'local',
         'sequencia',
         'data_validade',
         'id_usuario_cad',

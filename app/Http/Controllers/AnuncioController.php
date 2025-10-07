@@ -11,6 +11,8 @@ class AnuncioController extends Controller
 {
     public function index(Request $request, $tipo)
     {
+        $destaque = $request->input('destaque');
+
         $anuncios = Anuncio::select(
             [
                 'id',
@@ -19,6 +21,7 @@ class AnuncioController extends Controller
                 'imagem',
                 'site_url',
                 'site_janela',
+                'local',
                 'sequencia',
                 'data_validade'
             ]
@@ -28,9 +31,18 @@ class AnuncioController extends Controller
                 $q->where('data_validade', 0)
                     ->orWhereDate('data_validade', '>', Carbon::today());
             })
-            ->orderBy('sequencia')
-            ->get();
+            ->orderBy('sequencia');
 
+        if ($destaque <> "") {
+            $anuncios = $anuncios->where('local', '<>', '');
+        }
+
+
+        $anuncios = $anuncios->get();
+
+        if ($destaque <> "") {
+            $anuncios = $anuncios->keyBy('local');
+        }
 
         return response()->json($anuncios);
     }
