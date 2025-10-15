@@ -20,8 +20,8 @@ class MailerController extends Controller
         $assunto = $request->input('assunto');
         $destinatario = $request->input('destinatario');
         $mensagem = $request->input('mensagem');
-        $direcionamento = $request->input('direcionamento');
-        $objetivo = $request->input('objetivo');
+        $direcionamento = $request->input('direcionamento', 0);
+        $objetivo = $request->input('objetivo', 0);
 
         if (!$nome) {
             return response()->json(['error' => "Digite seu nome!"], 500);
@@ -32,12 +32,14 @@ class MailerController extends Controller
         if (!$assunto) {
             return response()->json(['error' => "Digite o assunto!"], 500);
         }
+        /*
         if (!$objetivo) {
             return response()->json(['error' => "Escolha o objetivo da mensagem!"], 500);
         }
         if (!$direcionamento) {
             return response()->json(['error' => "Escolha o direcionamento do assunto!"], 500);
         }
+        */
         if (!$mensagem) {
             return response()->json(['error' => "Digite a mensagem!"], 500);
         }
@@ -50,6 +52,7 @@ class MailerController extends Controller
         $dest_email = $contato_email->email;
         $dest_nome = $contato_email->nome;
 
+        /*
         $contato_direcionamento = ContatoDirecionamento::find($direcionamento);
         if (!$contato_direcionamento) {
             return response()->json(['error' => "Direcionamento não localizado!"], 500);
@@ -61,6 +64,7 @@ class MailerController extends Controller
             return response()->json(['error' => "Objetivo não localizado!"], 500);
         }
         $objetivo_nome = $contato_objetivo->nome;
+        */
 
 
         $protocolo = Protocolo::select(DB::raw("CONCAT('$abrev', LPAD((IFNULL(MAX(CAST(MID(protocolo, 4, 7) AS SIGNED)), 0) + 1), 7, '0')) AS protocolo"))
@@ -72,8 +76,6 @@ class MailerController extends Controller
 
         $mensagem = <<<HTML
             PROTOCOLO: <b>$protocolo</b>
-            <br/>Direcionamento: <b>$direcionamento_nome</b>
-            <br/>Objetivo: <b>$objetivo_nome</b>
             <br/>Remetente: <b>$nome</b>
             <br/>E-mail: <b>$email</b>
             <br/>Destinatário: <b>$dest_email</b>
@@ -129,7 +131,7 @@ class MailerController extends Controller
     {
         $contato_direcionamento = ContatoDirecionamento::get();
         $contato_objetivo = ContatoObjetivo::get();
-        $contato_email = ContatoEmail::get();
+        $contato_email = ContatoEmail::orderBy('nome')->get();
 
         return response()->json([
             'contato_direcionamento' => $contato_direcionamento,
