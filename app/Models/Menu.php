@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Menu extends Model
 {
@@ -19,6 +20,13 @@ class Menu extends Model
         'parametro',
         'ind_ativo'
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope('ativos', function (Builder $builder) {
+            $builder->where('data_excluido', 0);
+        });
+    }
 
     public function children()
     {
