@@ -11,6 +11,7 @@ class MenuController extends Controller
         $menus = Menu::where('ind_ativo', 'S')
             ->orderBy('id_menu_pai')
             ->orderBy('id_sequencia')
+            ->orderBy('nome')
             ->get();
 
         $rootMenus = $menus->where('id_menu_pai', 0);
