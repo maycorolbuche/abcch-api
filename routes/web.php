@@ -17,6 +17,8 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->get('/menu', 'MenuController@index');
+
 //$router->get('/email', 'MailerController@index');
 $router->post('/email', 'MailerController@index');
 $router->get('/email/dados', 'MailerController@data');
