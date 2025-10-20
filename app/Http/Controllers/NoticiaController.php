@@ -29,8 +29,8 @@ class NoticiaController extends Controller
         ]));
 
 
-        // Retorna dados do cache ou executa a consulta e armazena por 1 hora
-        $noticias = Cache::remember($cacheKey, 3600, function () use ($limit, $sortField, $sortOrder, $search) {
+        // Retorna dados do cache ou executa a consulta
+        $noticias = Cache::remember($cacheKey, 60, function () use ($limit, $sortField, $sortOrder, $search) {
             $select = [
                 'id',
                 'titulo',
