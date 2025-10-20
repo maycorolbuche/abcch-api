@@ -77,7 +77,7 @@ class Noticia extends Model
     public function getImagemUrlAttribute()
     {
         if (empty($this->imagem)) {
-            return env('MEDIA_URL') . '/lib/img/logo_bh.png';
+            return env('MEDIA_URL') . '/arq/img/logo_bh.png';
         }
 
         if (filter_var($this->imagem, FILTER_VALIDATE_URL)) {
