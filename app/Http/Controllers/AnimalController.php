@@ -111,7 +111,7 @@ class AnimalController extends Controller
 
         if (@$data['DsSiteComments'] <> "" || @$data["CdGoldMaresType"] <> "") {
             $html .= PdfParts::space(10);
-            $html .= PdfParts::html("<table><tr><td>");
+            $html .= PdfParts::html("<table style='width:100%'><tr><td style='width:100%'>");
             $html .= PdfParts::text($data['DsSiteComments'] ?? "", "color: red; font-weight: bold;");
             if (@$data["CdGoldMaresType"] <> "") {
                 $html .= PdfParts::html("</td><td>");
