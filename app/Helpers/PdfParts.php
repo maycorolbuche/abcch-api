@@ -213,7 +213,6 @@ class PdfParts
                         $class = "padding-top:0px;float:right;";
                         break;
                 }
-                $p = ($level == 4 ? 0 : 5);
                 $w = (50 / (($level + 1) * .5));
 
                 $html .= "<div style='$class'>";
