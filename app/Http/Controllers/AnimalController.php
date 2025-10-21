@@ -109,6 +109,17 @@ class AnimalController extends Controller
             ['label' => 'Local de Nascimento', 'value' => $data['DsFoalBirthplace'] ?? ''],
         ]);
 
+        if (@$data['DsSiteComments'] <> "" || @$data["CdGoldMaresType"] <> "") {
+            $html .= PdfParts::space(10);
+            $html .= PdfParts::html("<table><tr><td>");
+            $html .= PdfParts::text($data['DsSiteComments'] ?? "", "color: red; font-weight: bold;");
+            if (@$data["CdGoldMaresType"] <> "") {
+                $html .= PdfParts::html("</td><td>");
+                $html .= PdfParts::image("/imgs/escarapela_" . $data['CdGoldMaresType'] . ".png");
+            }
+            $html .= PdfParts::html("</td></tr></table>");
+        }
+
         $html .= PdfParts::space(50);
 
         $html .= PdfParts::title("GENEALOGIA");

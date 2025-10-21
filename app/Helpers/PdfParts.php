@@ -85,6 +85,21 @@ class PdfParts
         HTML;
     }
 
+    public static function text($text, $css = "")
+    {
+        return "<div style='$css'>$text</div>";
+    }
+
+    public static function html($htmlContent)
+    {
+        return $htmlContent;
+    }
+
+    public static function image($src)
+    {
+        return "<img src='" . $_SERVER['DOCUMENT_ROOT'] . "$src'/>";
+    }
+
     public static function space($height = 10)
     {
         return "<div style='height: " . $height . "px;'></div>";
@@ -180,6 +195,11 @@ class PdfParts
                 $html .= ($animal["nmAnimal"] ?? "");
             } else {
                 $html .= ($animal["nmAnimal"] ?? "");
+            }
+            if (@$animal["cdGoldMaresType"] <> "") {
+                $html .= "<div style='position:absolute;bottom:0;'>";
+                $html .= "<img src='" . $_SERVER['DOCUMENT_ROOT'] . "/imgs/escarapela_" . $animal['cdGoldMaresType'] . ".png' style='width:" . (50 / (($level + 1) * .5)) . "px;'/>";
+                $html .= "</div>";
             }
             $html .=  "</td>";
 
