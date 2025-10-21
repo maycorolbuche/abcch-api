@@ -196,9 +196,28 @@ class PdfParts
             } else {
                 $html .= ($animal["nmAnimal"] ?? "");
             }
+
             if (@$animal["cdGoldMaresType"] <> "") {
-                $html .= "<div style='position:absolute;bottom:0;'>";
-                $html .= "<img src='" . $_SERVER['DOCUMENT_ROOT'] . "/imgs/escarapela_" . $animal['cdGoldMaresType'] . ".png' style='width:" . (50 / (($level + 1) * .5)) . "px;'/>";
+                $class = "";
+                switch ($level) {
+                    case 1:
+                        $class = "padding-top:10px;";
+                        break;
+                    case 2:
+                        $class = "padding-top:5px;";
+                        break;
+                    case 3:
+                        $class = "padding-top:0;";
+                        break;
+                    case 4:
+                        $class = "padding-top:0px;float:right;";
+                        break;
+                }
+                $p = ($level == 4 ? 0 : 5);
+                $w = (50 / (($level + 1) * .5));
+
+                $html .= "<div style='$class'>";
+                $html .= "<img src='" . $_SERVER['DOCUMENT_ROOT'] . "/imgs/escarapela_" . $animal['cdGoldMaresType'] . ".png' style='width:" . $w . "px;'/>";
                 $html .= "</div>";
             }
             $html .=  "</td>";
