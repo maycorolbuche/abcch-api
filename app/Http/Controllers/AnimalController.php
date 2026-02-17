@@ -35,7 +35,7 @@ class AnimalController extends Controller
     public function show($id)
     {
         try {
-            $result = CavaloBhService::get($id);
+            $result = CavaloBhService::getAnimal($id);
             if (isset($result["message"]) && $result["message"] <> "") {
                 $result["error"] = $result["message"];
             } elseif (isset($result["result"])) {
