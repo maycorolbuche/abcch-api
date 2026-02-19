@@ -66,10 +66,11 @@ class CavaloBhService
         ]);
     }
 
-    public static function stallions(string $search): array
+    public static function stallions(string $search, string $initial): array
     {
         return self::post('ListApprovedStallions', [
             'NmAnimal' => strtoupper($search),
+            'NmAnimalStartsWith' => strtoupper($initial),
         ]);
     }
 }

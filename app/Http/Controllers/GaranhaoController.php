@@ -10,9 +10,10 @@ class GaranhaoController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search', '');
+        $initial = $request->input('initial', '');
 
         try {
-            $result = CavaloBhService::stallions($search);
+            $result = CavaloBhService::stallions($search, $initial);
 
             if (isset($result["message"]) && $result["message"] <> "") {
                 $result["error"] = $result["message"];
