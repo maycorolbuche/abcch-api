@@ -97,7 +97,7 @@ class PdfParts
 
     public static function image($src)
     {
-        return "<img src='" . $_SERVER['DOCUMENT_ROOT'] . "$src'/>";
+        return "<img src='" . base_path("public/$src") . "'/>";
     }
 
     public static function space($height = 10)
@@ -142,7 +142,7 @@ class PdfParts
     {
         $html = "";
 
-        $imagePath = $_SERVER['DOCUMENT_ROOT'] . '/imgs/family_tree.jpg';
+        $imagePath = base_path("public/imgs/family_tree.jpg");
         $imageData = '';
         if (file_exists($imagePath)) {
             $imageData = base64_encode(file_get_contents($imagePath));
@@ -216,7 +216,7 @@ class PdfParts
                 $w = (50 / (($level + 1) * .5));
 
                 $html .= "<div style='$class'>";
-                $html .= "<img src='" . $_SERVER['DOCUMENT_ROOT'] . "/imgs/escarapela_" . $animal['cdGoldMaresType'] . ".png' style='width:" . $w . "px;'/>";
+                $html .= "<img src='" . base_path("public/imgs/escarapela_" . $animal['cdGoldMaresType'] . ".png") . "' style='width:" . $w . "px;'/>";
                 $html .= "</div>";
             }
             $html .=  "</td>";
