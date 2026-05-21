@@ -133,7 +133,7 @@ class AnimalController extends Controller
 
         $pdf = app('dompdf.wrapper');
         $pdf->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-        return $pdf->stream('Genealogia - ' . Str::slug($data['NmAnimal'])  . '.pdf');
+        return $pdf->stream('genealogia_' . Str::slug($data['NmAnimal'])  . '.pdf');
     }
 
     public function crossingPrint($sire, $dam)
@@ -177,7 +177,7 @@ class AnimalController extends Controller
 
         $pdf = app('dompdf.wrapper');
         $pdf->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-        return $pdf->stream('Cruzamento Virtual - ' . $sire_data["NmAnimal"] . ' X ' . $dam_data["NmAnimal"] . '.pdf');
+        return $pdf->stream('cruzamento_virtual_' . Str::slug($sire_data["NmAnimal"]) . '_x_' . Str::slug($dam_data["NmAnimal"]) . '.pdf');
     }
 
     public function types()
