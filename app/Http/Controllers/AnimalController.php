@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\CavaloBhService;
 use App\Helpers\PdfParts;
+use Illuminate\Support\Str;
 
 class AnimalController extends Controller
 {
@@ -132,7 +133,7 @@ class AnimalController extends Controller
 
         $pdf = app('dompdf.wrapper');
         $pdf->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-        return $pdf->stream('Genealogia - ' . $data["NmAnimal"] . '.pdf');
+        return $pdf->stream('Genealogia - ' . Str::slug($data['NmAnimal'])  . '.pdf');
     }
 
     public function crossingPrint($sire, $dam)
