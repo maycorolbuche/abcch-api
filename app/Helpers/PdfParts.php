@@ -177,6 +177,10 @@ class PdfParts
                     $gapX = 11;
                     $gapY = 40;
                     break;
+                default:
+                    $height = 20;
+                    $gapX = 11;
+                    $gapY = 40;
             }
 
             if ($i == 0) {
@@ -212,11 +216,16 @@ class PdfParts
                     case 4:
                         $class = "padding-top:0px;float:right;";
                         break;
+                    default:
+                        $class = "padding-top:0px;float:right;";
                 }
                 $w = (50 / (($level + 1) * .5));
 
                 $html .= "<div style='$class'>";
-                $html .= "<img src='" . base_path("public/imgs/escarapela_" . $animal['cdGoldMaresType'] . ".png") . "' style='width:" . $w . "px;'/>";
+                $types = str_split($animal['cdGoldMaresType']);
+                foreach ($types as $type) {
+                    $html .= "<img src='" . base_path("public/imgs/escarapela_" . $type . ".png") . "' style='width:" . $w . "px;margin:2px;'/>";
+                }
                 $html .= "</div>";
             }
             $html .=  "</td>";

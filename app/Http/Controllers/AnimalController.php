@@ -115,8 +115,11 @@ class AnimalController extends Controller
             $html .= PdfParts::html("<table style='width:100%'><tr><td style='width:100%'>");
             $html .= PdfParts::text($data['DsSiteComments'] ?? "", "color: red; font-weight: bold;");
             if (@$data["CdGoldMaresType"] <> "") {
-                $html .= PdfParts::html("</td><td>");
-                $html .= PdfParts::image("/imgs/escarapela_" . $data['CdGoldMaresType'] . ".png");
+                $types = str_split($data["CdGoldMaresType"]);
+                foreach ($types as $type) {
+                    $html .= PdfParts::html("</td><td>");
+                    $html .= PdfParts::image("/imgs/escarapela_" . $type . ".png");
+                }
             }
             $html .= PdfParts::html("</td></tr></table>");
         }
