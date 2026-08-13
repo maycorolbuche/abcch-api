@@ -54,6 +54,8 @@ class AnimalController extends Controller
                 foreach ($result["data"]['lstBrothers'] as $key => $item) {
                     $result["data"]['lstBrothers'][$key]['DtFoaledBr'] = ($item["DtFoaled"] <> null ? date("d/m/Y", strtotime($item["DtFoaled"])) : null);
                 }
+
+                $result['data']["NrRegistration"] ??= $result['data']["NrRegistrationOriginal"];
             }
 
 
