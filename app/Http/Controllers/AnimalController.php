@@ -99,6 +99,7 @@ class AnimalController extends Controller
         $html .= PdfParts::fields(columns: 2, data: [
             ['label' => 'Nome', 'value' => $data['NmAnimal'] ?? ''],
             ['label' => 'Registro', 'value' => $data['NrRegistration'] ?? ''],
+            ['label' => 'UELN', 'value' => $data['NrUELN'] ?? ''],
             ['label' => 'Microchip', 'value' => $data['CdMicrochip'] ?? ''],
             ['label' => 'Nascimento', 'value' => $data['DtFoaledBr'] ?? ''],
             ['label' => 'Sexo', 'value' => $data['DsGender'] ?? ''],
@@ -107,6 +108,7 @@ class AnimalController extends Controller
             ['label' => 'Status', 'value' => $data['DsStatus'] ?? ''],
             ['label' => 'Raça', 'value' => $data['DsBreed'] ?? ''],
             ['label' => 'Pelagem', 'value' => $data['DsCoatColor'] ?? ''],
+            ['label' => 'Método Reprodutivo', 'value' => $data['DsBreedingType'] ?? ''],
             ['label' => 'DNA', 'value' => $data['CdDNALaboratory'] ?? ''],
             ['label' => 'Status do DNA', 'value' => $data['DsDNAResult'] ?? ''],
             ['label' => 'Local de Nascimento', 'value' => $data['DsFoalBirthplace'] ?? ''],
