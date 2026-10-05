@@ -6,19 +6,20 @@ use Closure;
 
 class CorsMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
     public function handle($request, Closure $next)
     {
-        $allowedOrigins = explode(',', env('CORS_ALLOWED_ORIGINS', '*'));
-        $origin = $request->headers->get('Origin');
+        $allowedOrigins = array_map(
+            fn($origin) => $this->normalizeOrigin($origin),
+            explode(',', env('CORS_ALLOWED_ORIGINS', '*'))
+        );
 
-        if (in_array($origin, $allowedOrigins) || in_array('*', $allowedOrigins)) {
+        $origin = $request->headers->get('Origin');
+        $normalizedOrigin = $this->normalizeOrigin($origin);
+
+        if (
+            in_array('*', $allowedOrigins, true) ||
+            in_array($normalizedOrigin, $allowedOrigins, true)
+        ) {
             $headers = [
                 'Access-Control-Allow-Origin' => $origin,
                 'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
@@ -31,14 +32,35 @@ class CorsMiddleware
         }
 
         if ($request->isMethod('OPTIONS')) {
-            return response()->json('{"method":"OPTIONS"}', 200, $headers);
+            return response()->json(
+                ['method' => 'OPTIONS'],
+                200,
+                $headers
+            );
         }
 
         $response = $next($request);
+
         foreach ($headers as $key => $value) {
             $response->header($key, $value);
         }
 
+
+        $response->headers->set('X-Debug-Origin', $origin ?? 'NULL');
+        $response->headers->set('X-Debug-Allowed-Origins', implode(',', $allowedOrigins));
+        $response->headers->set('X-Debug-Normalized-Origins', $normalizedOrigin);
+
         return $response;
+    }
+
+    private function normalizeOrigin(?string $origin): string
+    {
+        if (!$origin) {
+            return '';
+        }
+
+        return strtolower(
+            preg_replace('#^https?://#i', '', rtrim(trim($origin), '/'))
+        );
     }
 }
