@@ -8,6 +8,14 @@ class CorsMiddleware
 {
     public function handle($request, Closure $next)
     {
+        if (
+            $request->is('animais/*/print') ||
+            $request->is('animal/*/print')
+        ) {
+            return $next($request);
+        }
+
+
         $allowedOrigins = array_map(
             fn($origin) => $this->normalizeOrigin($origin),
             explode(',', env('CORS_ALLOWED_ORIGINS', '*'))
